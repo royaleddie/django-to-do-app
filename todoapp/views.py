@@ -30,8 +30,16 @@ def index(request):
     return render(request, 'todo/index.html', context)
 
 def update(request, pk):
+    todo = Task.objects.get(id=pk)
+    if request.method=='POST':
+        form = TaskForm(request.POST, instance=todo)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    else:
+        form = TaskForm(instance=todo)
     context = {
-
+        'form':form
     }
     return render(request, 'todo/update.html', context)
 
