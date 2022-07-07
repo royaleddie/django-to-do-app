@@ -2,7 +2,7 @@
 {% block title %}Todo App{% endblock %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="border p-3">
+    <div class="border p-3 shadow">
         <form method="POST">
             {% csrf_token %}
             {{ form|crispy }}
@@ -14,11 +14,15 @@
             <small>{{todo.date}}</small>
             <div class="row">
                 <div class="col-md-8">
+                    {% if todo.complete == True %}
+                    <p><span class="btn btn-success btn-sm"><i class="fa-solid fa-circle-check"></i></span> {{todo.content}}</p>
+                    {% else %}
                     <p>{{todo.content}}</p>
+                    {% endif %}
                 </div>
                 <div class="col-md-4">
                     <a class="btn btn-info btn-sm" href="{% url 'todo-update' todo.id %}">Edit</a>
-                    <a class="btn btn-danger btn-sm" href="#">Delete</a>
+                    <a class="btn btn-danger btn-sm" href="{% url 'todo-delete' todo.id %}">Delete</a>
                 </div>
             </div>
         </div>

@@ -43,3 +43,10 @@ def update(request, pk):
     }
     return render(request, 'todo/update.html', context)
 
+
+def delete(request, pk):
+    todo = Task.objects.get(id=pk)
+    if request.method== 'POST':
+        todo.delete()
+        return redirect('/')
+    return render(request, 'todo/delete.html')
